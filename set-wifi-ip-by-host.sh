@@ -19,12 +19,12 @@ HOST=$(hostname)
 # Wydobądź numer z końca hosta, np. belchatow2-m7 -> 7
 NUM=$(echo "$HOST" | grep -oP '(?<=-m)\d+')
 
-# Ustal IP wg reguły
-if [ "$NUM" -ge 1 ] && [ "$NUM" -le 9 ]; then
-    IPADDR="192.168.1.$((40+NUM))"
-else
-    IPADDR="192.168.1.50"
-fi
+# Ustal IP wg reguły:
+# m1 → 192.168.1.41
+# m9 → 192.168.1.49
+# m10 → 192.168.1.50
+# m11 → 192.168.1.51 itd.
+IPADDR="192.168.1.$((40+NUM))"
 
 # Brama i DNS
 GATEWAY="192.168.1.1"
