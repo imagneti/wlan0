@@ -1,12 +1,17 @@
 #!/bin/bash
-# Skrypt ustawia statyczny adres IP dla Wi-Fi na podstawie nazwy hosta
-# i restartuje WireGuard
 
 # Interfejs Wi-Fi
 IFACE="wlan0"
 
-# Nazwa połączenia NetworkManager dla wlan0
-CON_NAME="preconfigured"   # zmień jeśli u Ciebie inna
+# Wykryj aktywne połączenie Wi-Fi dla wlan0
+CON_NAME=$(nmcli -t -f NAME,DEVICE connection show --active | grep "$IFACE" | cut -d: -f1)
+
+if [ -z "$CON_NAME" ]; then
+    echo "Nie wykryto aktywnego połączenia Wi-Fi na $IFACE"
+    exit 1
+fi
+
+echo "Aktywne połączenie Wi-Fi: $CON_NAME"
 
 # Pobierz nazwę hosta
 HOST=$(hostname)
